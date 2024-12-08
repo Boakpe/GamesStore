@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Rating Menu{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>    
+<div class="d-flex justify-content-center" style="height: 100vh;">
+    <ul class="list-group">
+        {% for rating in ratings %}
+            <a href="/rating/{{rating.id}}" class="text-decoration-none">
+                <li class="list-group-item">({{ rating.user.username }}) - {{ rating.game.title }} - Nota: {{ rating.rating }}</li>
+            </a>  
+            {% empty %}
+            <li class="list-group-item">Nenhum rating cadastrado.</li>
+        {% endfor %}
+        <a href = "/ratingmenu/add/" class="btn btn-primary">Adicionar Avaliação</a>
+        <form class="d-flex" role="search" method="GET" id="search_rating_form" action="{% url 'search-rating-item' %}">
+            <input class="form-control me-2" type="text" id="search_rating" name="search_rating" placeholder="Pesquisar Avaliaçao">
+            <button class="btn btn-outline-primary me-2" type="submit">Pesquisar</button>
+        </form>
+    </ul>
+    
+</div>
+{% endblock %}
